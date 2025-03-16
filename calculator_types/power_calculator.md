@@ -16,11 +16,11 @@
 
 -   **Baseline Success Rate**: Conversion rate for the baseline group (e.g., 20%). Used as an estimate for the expected success rate in the experiment control group.
 
-<img src="./power_binary.png" alt="example image for the binary power calculator usage"/>
+<img src="./images/power_binary.png" alt="example image for the binary power calculator usage"/>
 
 ## Power calculator for normally distributed outcomes
 
 -   **Baseline Mean Response**: Absolute mean for the baseline group (e.g., 5.0 units). Used as an estimate for the expected mean in the experiment control group.
 -   **Baseline Standard Deviation**: Standard deviation for the baseline group. Used as an estimate for the expected standard deviation in the experiment control group.
 
-<img src="./power_normal.png" alt="example image for the normal power calculator usage"/>
+<img src="./images/power_normal.png" alt="example image for the normal power calculator usage"/>

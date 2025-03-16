@@ -9,8 +9,12 @@
 
 #### No mismatch
 
-<img src="./srm_check.png" alt="example image for the sample ratio mismatch calculator with no mismatch"/>
+<img src="./images/srm_check.png" alt="example image for the sample ratio mismatch calculator with no mismatch"/>
 
 #### Significant mismatch
 
-<img src="./srm_cross.png" alt="example image for the sample ratio mismatch calculator with mismatch"/>
+<img src="./images/srm_cross.png" alt="example image for the sample ratio mismatch calculator with mismatch"/>
+
+#### Credits
+
+The check mark and cross mark icons used in this app were made by Iconjam from www.flaticon.com

@@ -15,8 +15,8 @@
 
 ## Example significance calculator for binary outcomes
 
-<img src="./significance_binary.png" alt="example image for the binary significance calculator usage"/>
+<img src="./images/significance_binary.png" alt="example image for the binary significance calculator usage"/>
 
 ## Example significance calculator for normally distributed outcomes
 
-<img src="./significance_normal.png" alt="example image for the normal significance calculator usage"/>
+<img src="./images/significance_normal.png" alt="example image for the normal significance calculator usage"/>
