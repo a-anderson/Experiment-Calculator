@@ -1,0 +1,24 @@
+[project]
+name = "experiment-calculator"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Ashley Anderson",email = "ashley.r.anderson@outlook.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit-navigation-bar (==3.3.0)",
+    "statsmodels (>=0.14.4,<0.15.0)",
+    "streamlit (==1.33.0)",
+    "plotly (>=6.0.0,<7.0.0)",
+    "watchdog (>=6.0.0,<7.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "experiment_calculator", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

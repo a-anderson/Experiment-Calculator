@@ -1,0 +1,104 @@
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+*.env
+*.venv
+
+# Streamlit-specific files
+.streamlit/
+.streamlit_cache/
+.streamlit/secrets.toml
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs and local development files
+*.log
+*.out
+*.err
+
+# OS-specific files (macOS, Windows)
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Desktop.ini
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python packaging
+*.egg-info/
+*.egg
+build/
+dist/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# pytest cache
+test/__pycache__/
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+*.cover
+.cache
+
+# MyPy cache
+.mypy_cache/
+
+# Local environment files
+.env
+.envrc
+.secrets
+*.local
+
+# Python virtual environments
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Docker
+Dockerfile
+*.dockerignore
+
+# Data and model files
+*.csv
+*.db
+*.sqlite3
+*.h5
+*.pkl
+
+# Outputs and artifacts
+outputs/
+artifacts/
+
+# Miscellaneous
+*.ipynb
+*.pdf
+*.docx
+*.pptx
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.whl
+
+# Cython and compiled Python extensions
+*.so
+*.c
+*.cpp
