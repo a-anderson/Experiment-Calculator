@@ -2,7 +2,7 @@
 
 ## About
 
-The goal of Experiment Calculator is to provide a simple calculator to plan, analyse and diagnose simple experiments. This a python steamlit version of the [Experiment Calculator](https://github.com/sabush/ExperimentCalculator) app designed by [Stephen Bush](https://github.com/sabush).
+The goal of Experiment Calculator is to provide a simple calculator to plan, analyse and diagnose simple experiments. This a python streamlit version of the [Experiment Calculator](https://github.com/sabush/ExperimentCalculator) app designed by [Stephen Bush](https://github.com/sabush).
 
 ## Usage
 
@@ -35,6 +35,6 @@ Please click on the links above for examples of all calculator types and explana
 
 This project is licensed under the [MIT License](LICENSE).
 
-#### Credits
+### Credits
 
 The check mark and cross mark icons used in this app were made by Iconjam from www.flaticon.com
