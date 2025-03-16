@@ -14,6 +14,12 @@ There are three calculators in this app.
     - Available for binary or normally distributed outcomes.
 3. A [sample ratio mismatch calculator](calculator_types/srm_calculator.md) to identify statistically significant deviations from the expected sample proportions.
 
+## Power calculator example
+
+Please click on the links above for examples for all calculator types and explanations of their contents.
+
+<img src="calculator_types/images/power_binary.png" alt="example image for the binary power calculator usage"/>
+
 ### Installation
 
 1. Clone this repository.
