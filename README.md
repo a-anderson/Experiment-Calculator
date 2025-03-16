@@ -16,7 +16,7 @@ There are three calculators in this app.
 
 ## Power calculator example
 
-Please click on the links above for examples for all calculator types and explanations of their contents.
+Please click on the links above for examples of all calculator types and explanations of their contents.
 
 <img src="calculator_types/images/power_binary.png" alt="example image for the binary power calculator usage"/>
 
