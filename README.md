@@ -27,7 +27,7 @@ Please click on the links above for examples of all calculator types and explana
 1. Clone this repository.
 2. Install the required packages:
     - Install Python ≥ 3.11
-    - Install Poetry
+    - Install [Poetry](https://python-poetry.org/docs/)
     - Move to the Experiment Calculator folder and run `poetry install`
 3. Run the Experiment Calculator app
 
