@@ -1197,14 +1197,14 @@ docs = ["ipykernel", "jupyter-client", "matplotlib", "nbconvert", "nbformat", "n
 
 [[package]]
 name = "streamlit"
-version = "1.33.0"
+version = "1.35.0"
 description = "A faster way to build and share data apps"
 optional = false
 python-versions = "!=3.9.7,>=3.8"
 groups = ["main"]
 files = [
-    {file = "streamlit-1.33.0-py2.py3-none-any.whl", hash = "sha256:bfacb5d1edefcf803c2040b051a21b4c81317a9865448e6767d0a0c6aae7edae"},
-    {file = "streamlit-1.33.0.tar.gz", hash = "sha256:a8da8ff46f5b948c56d2dc7aca7a61cf8d995f4f21744cf82258ae75e63004ba"},
+    {file = "streamlit-1.35.0-py2.py3-none-any.whl", hash = "sha256:e17d1d86830a0d7687c37faf2fe47bffa752d0c95a306e96d7749bd3faa72a5b"},
+    {file = "streamlit-1.35.0.tar.gz", hash = "sha256:679d55bb6189743f606abf0696623df0bfd223a6d0c8d96b8d60678d4891d2d6"},
 ]
 
 [package.dependencies]
@@ -1229,7 +1229,7 @@ typing-extensions = ">=4.3.0,<5"
 watchdog = {version = ">=2.1.5", markers = "platform_system != \"Darwin\""}
 
 [package.extras]
-snowflake = ["snowflake-connector-python (>=2.8.0) ; python_version == \"3.8\"", "snowflake-snowpark-python (>=0.9.0) ; python_version == \"3.8\""]
+snowflake = ["snowflake-connector-python (>=2.8.0) ; python_version < \"3.12\"", "snowflake-snowpark-python (>=0.9.0) ; python_version < \"3.12\""]
 
 [[package]]
 name = "streamlit-navigation-bar"
@@ -1384,4 +1384,4 @@ watchmedo = ["PyYAML (>=3.10)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11"
-content-hash = "a0fc2c597bfe382a88354213b8aa3dde639a0bfdbb4f22d2c08909b6912a876d"
+content-hash = "92cfe6b26d7a48c0c3bf610b3efc654adb47b316a8909d3b781561069a2e6c74"

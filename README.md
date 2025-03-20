@@ -20,16 +20,36 @@ Please click on the links above for examples of all calculator types and explana
 
 <img src="calculator_types/images/power_binary.png" alt="example image for the binary power calculator usage"/>
 
-### Installation
+## Installation
+
+#### Option 1
 
 1. Clone this repository.
 2. Install the required packages:
     - Install Python ≥ 3.11
     - Install Poetry
-    - Move to the Experiment Calculator folder and run `poetry init`
+    - Move to the Experiment Calculator folder and run `poetry install`
 3. Run the Experiment Calculator app
 
     `poetry run streamlit run experiment_calculator/streamlit_main.py`
+
+#### Option 2
+
+1. Clone this repository.
+2. Install the required packages:
+
+    - Install Python ≥ 3.11
+    - Move to the Experiment Calculator folder, create and activate a virtual environment, and install the required packages from `requirements.txt`.
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activte
+    pip install -r requirements.txt
+    ```
+
+3. Run the Experiment Calculator app
+
+    `run experiment_calculator/streamlit_main.py`
 
 ## License
 

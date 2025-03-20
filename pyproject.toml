@@ -10,7 +10,7 @@ requires-python = ">=3.11"
 dependencies = [
     "streamlit-navigation-bar (==3.3.0)",
     "statsmodels (>=0.14.4,<0.15.0)",
-    "streamlit (==1.33.0)",
+    "streamlit (==1.35.0)",
     "plotly (>=6.0.0,<7.0.0)",
     "watchdog (>=6.0.0,<7.0.0)"
 ]
