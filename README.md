@@ -44,12 +44,12 @@ Please click on the links above for examples of all calculator types and explana
     ```bash
     python3 -m venv venv
     source venv/bin/activte
-    pip install -r requirements.txt
+    python -m pip install -r requirements.txt
     ```
 
 3. Run the Experiment Calculator app
 
-    `run experiment_calculator/streamlit_main.py`
+    `python -m streamlit run experiment_calculator/streamlit_main.py`
 
 ## License
 
