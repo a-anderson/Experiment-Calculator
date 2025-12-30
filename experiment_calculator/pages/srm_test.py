@@ -62,7 +62,7 @@ def show_srm_test():
             image_col1, image_col2, image_col3 = st.columns([1,3,1])
 
             with image_col2:
-                st.image(image_path, use_column_width=False)
+                st.image(image_path, width='content')
         
         else:
             st.write("#### :red[Sample Inpur Error:]")
