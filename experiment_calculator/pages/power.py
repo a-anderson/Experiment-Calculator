@@ -33,7 +33,7 @@ def show_power(outcome_type):
             baseline_mean = ui.baseline_mean_selection()
             baseline_stdev = ui.baseline_std_selection()
 
-        st.write("##### Sample split across groups")
+        st.markdown("**Sample split across groups**")
         st.write(ui.input_table_instructions())
 
         sample_split = ui.sample_split_selection()

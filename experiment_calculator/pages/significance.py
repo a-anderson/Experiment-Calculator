@@ -20,7 +20,7 @@ def show_significance(outcome_type:Literal["binary", "normal"]):
 
     with column_1:
 
-        st.write("##### Summary data for each experiment group")
+        st.markdown("**Summary data for each experiment group**")
         st.write(ui.input_table_instructions())
 
         experiment_summary = ui.experiment_data_summary(outcome_type)
