@@ -103,7 +103,7 @@ def show_significance(outcome_type:Literal["binary", "normal"]):
                 effect_type=effect_type,
             )
 
-            st.plotly_chart(group_differences, use_container_width=True)
+            st.plotly_chart(group_differences, width="stretch")
 
             ## ---- Group Response Plot Generation ---- ##
             group_responses = calculation.group_responses(
@@ -119,7 +119,7 @@ def show_significance(outcome_type:Literal["binary", "normal"]):
                 outcome_type=outcome_type,
             )
 
-            st.plotly_chart(response_plot, use_container_width=True)
+            st.plotly_chart(response_plot, width="stretch")
 
         else:
             st.write("#### :red[Experiment Summary Error:]")
