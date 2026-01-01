@@ -4,32 +4,34 @@ from typing import Union, Literal
 
 def calculation_type_selection():
     return st.radio(
-        label="##### What do you want to calculate?",
+        label="**What do you want to calculate?**",
         options=["Minimum Sample Size", "Minimum Detectable Effect"],
-        index=0
+        index=0,
     )
 
     
 def baseline_success_selection():
     return st.number_input(
-        label="##### Success rate in the baseline group (%)",
+        label="**Success rate in the baseline group (%)**",
         value=20.0,
         min_value=0.1,
         max_value=100.0,
         step=1.0,
+        help="What is the outcome rate in the baseline group of the experiment? This can usually be determined using existing data.",
     )
 
 def baseline_mean_selection():
     return st.number_input(
-        label="##### Mean response in the baseline group",
+        label="**Mean response in the baseline group**",
         value=5.0,
         min_value=0.0,
         step=1.0,
+        help="What is the outcome response in the baseline group of the experiment? This can usually be determined using existing data.",
     )
 
 def baseline_std_selection():
     return st.number_input(
-        label="##### Standard deviation in the baseline group",
+        label="**Standard deviation in the baseline group**",
         value=8.0,
         min_value=0.0,
         step=1.0,
@@ -46,9 +48,10 @@ def sample_split_selection():
 
 def effect_type_selection():
     return st.radio(
-        label="##### Effect type to be used",
+        label="**Effect type to be used**",
         options=["Absolute Effect", "Relative Effect"],
-        index=0
+        index=0,
+        help="An **absolute** effect is defined by the difference between the responses in each group (new - old). \n\nA **relative** effect is the percentage change in the outcome ((new - old)/old))"
     )
 
 def mde_level_selection(
@@ -57,10 +60,10 @@ def mde_level_selection(
 ): 
 
     if effect_type == "Absolute Effect" and outcome_type == "normal":
-        label = "##### Minimum Detectible Effect"
+        label = "**Minimum Detectible Effect**"
         default_value = 1.0
     else:
-        label = "##### Minimum Detectible Effect (%)"
+        label = "**Minimum Detectible Effect (%)**"
         default_value = 5.0
 
     return st.number_input(
@@ -69,19 +72,21 @@ def mde_level_selection(
         min_value=0.1,
         max_value=100.0,
         step=1.0,
+        help="What is the smallest absolute effect size that would be considered meaningful for the experiments? Note that the smaller this effect, the larger the sample size will be.",
     )
 
 def sample_size_input():
     return st.number_input(
-        label="##### Total Available Sample Size",
+        label="**Total Available Sample Size**",
         value=10_000,
         min_value=100,
         step=1,
+        help="How many observations are available across all groups in the experiment?",
     )
 
 def significance_level_selection():
     return st.number_input(
-    label="##### Level of Significance (%)",
+    label="**Level of Significance (%)**",
     value=5.0,
     min_value=0.1,
     max_value=100.0,
@@ -90,7 +95,7 @@ def significance_level_selection():
 
 def power_level_selection():
     return st.number_input(
-    label="##### Level of Power (%)",
+    label="**Level of Power (%)**",
     value=80,
     min_value=1,
     max_value=100,
@@ -99,7 +104,7 @@ def power_level_selection():
 
 def comparison_type_selection():
     return st.radio(
-        label="##### Comparisons to estimate",
+        label="**Comparisons to estimate**",
         options=["Compare to first", "Compare all pairs"],
         index=0
     )
@@ -109,9 +114,10 @@ def mtc_type_selection():
     options = ["Bonferroni", "None"]
 
     return st.radio(
-        label="##### Multiple Comparisons Correction",
+        label="**Multiple Comparisons Correction**",
         options=options,
-        index=0
+        index=0,
+        help="Reduce the likelihood of false positives when conducting multiple hypothesis tests simultaneously."
     )
 
 def format_sample_size_results(
@@ -164,9 +170,10 @@ def experiment_data_summary(outcome_type:Literal["binary", "normal"]):
 
 def sequential_testing_selection():
     return st.radio(
-        label="##### Sequential Testing Correction",
+        label="**Sequential Testing Correction**",
         options=["O'Brien-Fleming", "None"],
-        index=1
+        index=1,
+        help="Reduce the likelihood of false positives when checking test results before the test ends."
     )
 
 def experiment_duration_summary():

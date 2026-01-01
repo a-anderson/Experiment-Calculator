@@ -5,11 +5,12 @@ from utils import ui, validation, calculation
 
 def show_srm_test():
     st.header("Sample Ratio Mismatch Test")
-    st.write("### ")
+    st.markdown("") # Extra space for formatting
+
     col1, spacer, col2 = st.columns([2, 0.2, 3])
 
     with col1:
-        st.write("##### Expected proportions and actual counts form each experiment group")
+        st.write("**Expected proportions and actual counts form each experiment group**")
         st.write(ui.input_table_instructions())
 
         default_data = pd.DataFrame(
@@ -22,10 +23,8 @@ def show_srm_test():
         sample_sizes = st.data_editor(default_data, num_rows="dynamic", hide_index=True)
         sample_sizes_are_valid = validation.valid_srm_data(sample_sizes.dropna())
 
-        st.write("##### ")
-
         threshold = st.number_input(
-            label="##### P-value threshold for sample ratio mismatch",
+            label="**P-value threshold for sample ratio mismatch**",
             value=0.001,
             min_value=0.001,
             max_value=1.000,
