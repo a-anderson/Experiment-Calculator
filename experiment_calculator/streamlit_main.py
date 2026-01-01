@@ -17,6 +17,7 @@ styles = {
     "span": {
         "color": "white",
         "padding": "14px",
+        "text-align": "center",
     },
     "active": {
         "background-color": "white",
