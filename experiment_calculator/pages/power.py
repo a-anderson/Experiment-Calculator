@@ -123,7 +123,7 @@ def show_power(outcome_type):
 
                 st.write(results_summary)
 
-                st.dataframe(required_sample_df.dropna(), hide_index=True)
+                st.dataframe(required_sample_df.dropna(), hide_index=True, width="content")
                 st.write(f"##### Total Samples Required:  {total_samples_required:,}")
             else:
                 effect_size = None
@@ -204,7 +204,7 @@ def show_power(outcome_type):
             )
 
             # Display the plot in Streamlit
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         
         # Handle cases where the traffic allocation is invalid
         else:
