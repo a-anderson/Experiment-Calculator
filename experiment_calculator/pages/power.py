@@ -79,7 +79,6 @@ def show_power(outcome_type):
                 calculation_ratios = sample_split["Traffic Allocation (%)"].dropna() / sample_split["Traffic Allocation (%)"][0]
                 ratio = calculations.design_ratio(calculation_ratios)
             else:
-                total_sample_allocation = sample_split["Traffic Allocation (%)"].sum()
                 largest_traffic_allocation = sample_split["Traffic Allocation (%)"].max()
                 smallest_traffic_allocation = sample_split["Traffic Allocation (%)"].min()
 
