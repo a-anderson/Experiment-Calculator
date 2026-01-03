@@ -236,7 +236,7 @@ def normal_effect_size(
     return type
         float
     """
-    if baseline_stdev <= 0:
+    if baseline_stdev is None or baseline_stdev <= 0:
         raise ValueError("Baseline standard deviation must be positive.")
     
     if effect_type == "Relative Effect":
@@ -292,7 +292,7 @@ def n1_sample_size(
     alpha:float,
     power:float,
     ratio:float,
-    alternative = "two-sided" # TODO: use param rather than hard-code
+    alternative = "two-sided"
 ):
     """
     Calculates the group 1 sample size required to reach the desired power for an 
@@ -326,7 +326,7 @@ def n1_sample_size(
             alpha = alpha,
             power = power,
             ratio = ratio,
-            alternative = "two-sided" 
+            alternative = alternative
         )
     )
 
@@ -372,7 +372,7 @@ def minimum_detectable_effect_size(
     power:float,
     alpha:float,
     ratio:float,
-    alternative:str="two-sided" # TODO: use param rather than hard-code
+    alternative:str="two-sided"
 ):
     """
     Calculates the minimum detectable effect for an experiment where the sample size
@@ -402,7 +402,7 @@ def minimum_detectable_effect_size(
             alpha = alpha,
             power = power,
             ratio = ratio,
-            alternative = "two-sided"
+            alternative = alternative
     )
 
 def effect_size_list(
