@@ -36,7 +36,7 @@ class TestEffectSizeCalculations:
         mde = 0.02
         
         result = effect_size("binary", "Absolute Effect", baseline, mde)
-        expected = proportion_effectsize(baseline, baseline + mde, method="normal")
+        expected = proportion_effectsize(baseline + mde, baseline, method="normal")
         
         assert result == pytest.approx(expected, abs=1e-6)
     
@@ -48,7 +48,7 @@ class TestEffectSizeCalculations:
         mde = 0.2  # 20% relative increase
         
         result = effect_size("binary", "Relative Effect", baseline, mde)
-        expected = proportion_effectsize(baseline, baseline * 1.2, method="normal")
+        expected = proportion_effectsize(baseline * 1.2, baseline, method="normal")
         
         assert result == pytest.approx(expected, abs=1e-6)
     
@@ -67,7 +67,7 @@ class TestEffectSizeCalculations:
         """Larger MDE should produce larger effect size"""
         es_small = effect_size("binary", "Absolute Effect", 0.1, 0.01)
         es_large = effect_size("binary", "Absolute Effect", 0.1, 0.05)
-        assert es_large > es_small # TODO: should this be abs(es_large) > abs(es_small)??
+        assert es_large > es_small
 
 class TestSampleSizeCalculations:
     def test_sample_size_matches_statsmodels(self):
