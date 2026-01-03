@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 from pathlib import Path
-from utils import ui, validation, calculation
+from experiment_calculator.core import calculations, validation
+from experiment_calculator.ui import components
 
 def show_srm_test():
     st.header("Sample Ratio Mismatch Test")
@@ -11,7 +12,7 @@ def show_srm_test():
 
     with col1:
         st.write("**Expected proportions and actual counts form each experiment group**")
-        st.write(ui.input_table_instructions())
+        st.write(components.input_table_instructions())
 
         default_data = pd.DataFrame(
             [
@@ -35,7 +36,7 @@ def show_srm_test():
     with col2:
         if sample_sizes_are_valid:
             sample_sizes["Expected Proportion"] = sample_sizes["Expected Proportion (%)"] / 100
-            p_value = calculation.srm_pvalue(sample_sizes.dropna())
+            p_value = calculations.srm_pvalue(sample_sizes.dropna())
             
             if p_value < 0.00001:
                 formatted_p_val = f"P value < 0.00001"
@@ -44,13 +45,13 @@ def show_srm_test():
 
             root_dir = Path(__file__).parents[1]
             if p_value > threshold:
-                image_path = str(root_dir / "utils" / "checked.png")
+                image_path = str(root_dir / "ui" / "checked.png")
                 result_text = (
                     "### :green[There is no sample ratio mismatch error]\n"
                     + f"#### {formatted_p_val}"
                 )
             else:
-                image_path = str(root_dir / "utils" / "cancel.png")
+                image_path = str(root_dir / "ui" / "cancel.png")
                 result_text = (
                     "### :red[There is a sample ratio mismatch error]\n"
                     + f"#### {formatted_p_val}"

@@ -292,7 +292,7 @@ def n1_sample_size(
     alpha:float,
     power:float,
     ratio:float,
-    alternative = "two-sided"
+    alternative = "two-sided" # TODO: use param rather than hard-code
 ):
     """
     Calculates the group 1 sample size required to reach the desired power for an 
@@ -326,7 +326,7 @@ def n1_sample_size(
             alpha = alpha,
             power = power,
             ratio = ratio,
-            alternative = "two-sided"
+            alternative = "two-sided" 
         )
     )
 
@@ -372,7 +372,7 @@ def minimum_detectable_effect_size(
     power:float,
     alpha:float,
     ratio:float,
-    alternative:str="two-sided"
+    alternative:str="two-sided" # TODO: use param rather than hard-code
 ):
     """
     Calculates the minimum detectable effect for an experiment where the sample size

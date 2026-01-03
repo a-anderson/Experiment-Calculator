@@ -12,7 +12,8 @@ dependencies = [
     "streamlit (>=1.52.0,<2.0.0)",
     "plotly (>=6.0.0,<7.0.0)",
     "watchdog (>=6.0.0,<7.0.0)",
-    "streamlit-community-navigation-bar (>=4.7.11,<5.0.0)"
+    "streamlit-community-navigation-bar (>=4.7.11,<5.0.0)",
+    "pytest (>=9.0.2,<10.0.0)"
 ]
 
 [tool.poetry]
