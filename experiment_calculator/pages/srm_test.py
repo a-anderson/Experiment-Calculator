@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 from pathlib import Path
-from experiment_calculator.core import calculations, validation
-from experiment_calculator.ui import components
+from core import calculations, validation
+from ui import components
 
 def show_srm_test():
     st.header("Sample Ratio Mismatch Test")

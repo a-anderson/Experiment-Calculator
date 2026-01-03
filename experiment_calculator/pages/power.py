@@ -2,9 +2,9 @@ from math import ceil
 import streamlit as st
 import numpy as np
 import pandas as pd
-from experiment_calculator.core import calculations, validation
-from experiment_calculator.ui import plots
-from experiment_calculator.ui import components
+from core import calculations, validation
+from ui import plots
+from ui import components
 
 def show_power(outcome_type):
 

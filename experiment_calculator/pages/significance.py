@@ -1,9 +1,9 @@
 import pandas as pd
 import streamlit as st
 from typing import Union, Literal
-from experiment_calculator.core import calculations, validation
-from experiment_calculator.ui import plots
-from experiment_calculator.ui import components
+from core import calculations, validation
+from ui import plots
+from ui import components
 
 def show_significance(outcome_type:Literal["binary", "normal"]):
     st.header(f"Significance Calculator - {outcome_type.title()} Outcome")

@@ -136,11 +136,11 @@ def binary_effect_size(
     """
     assert effect_type in ("Absolute Effect", "Relative Effect")
     if effect_type == "Absolute Effect":
-        proportion_2 = baseline_mean + mde
-        return proportion_effectsize(prop1=baseline_mean, prop2=proportion_2, method="normal")
+        proportion_1 = baseline_mean + mde
+        return proportion_effectsize(prop1=proportion_1, prop2=baseline_mean, method="normal")
 
-    proportion_2 = (1 + mde) * baseline_mean
-    return proportion_effectsize(prop1=baseline_mean, prop2=proportion_2, method="normal")
+    proportion_1 = (1 + mde) * baseline_mean
+    return proportion_effectsize(prop1=proportion_1, prop2=baseline_mean, method="normal")
 
 def convert_effect_size_for_binary_outcome(
     effect_type:Literal["Absolute Effect", "Relative Effect"],
