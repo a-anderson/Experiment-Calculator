@@ -65,7 +65,7 @@ def show_srm_test():
                 st.image(image_path, width='content')
         
         else:
-            st.write("#### :red[Sample Inpur Error:]")
+            st.write("#### :red[Sample Input Error:]")
             st.write(":red[Sample sizes for each individual group must be between 1% and 100%.]")
             st.write(":red[Total expected proportions must be 100% or less.]")
             st.write(":red[Please change the input to meet these specifications.]")
