@@ -201,7 +201,6 @@ def show_power(outcome_type):
                 x_data=plot_x_data,
                 power_percents=power_percents,
                 target_power_level=power_level,
-                plot_type=effect_type,
                 outcome_type=outcome_type,
             )
 

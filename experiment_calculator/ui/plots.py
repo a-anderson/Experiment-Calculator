@@ -9,7 +9,6 @@ def power_curve(
     x_data:Union[list, np.ndarray],
     power_percents:Union[list, np.ndarray],
     target_power_level:int,
-    plot_type:str, # TODO: use param rather than hard-code
     outcome_type:Literal["binary", "normal"]
 ):
     if calculation_type == "Minimum Sample Size":
@@ -144,7 +143,6 @@ def group_difference_forest(
         title='Difference in Outcome Between Groups',
         xaxis_title=x_axis_label,
         yaxis=dict(
-            # autorange="reversed",
             title_font=dict(size=20), 
             tickfont=dict(size=18),   
             tickvals=list(range(len(data_reversed))), 
@@ -177,7 +175,6 @@ def group_response_forest(
     data["error"] = (data["ci_upper"] - data["ci_lower"]) / 2
 
     colors = pc.qualitative.Plotly
-    num_groups = data.shape[0] # TODO: why is this defined?
 
     # Create figure with one trace per study
     fig = go.Figure()
