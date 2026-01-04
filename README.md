@@ -99,7 +99,7 @@ Significance level: 5%
 Power: 80%
 Traffic split: 50/50
 
-Result: 3,842 samples per group (7,684 total)
+Result: 3,836 samples per group (7,672 total)
 ```
 
 **Example: Continuous Outcome (Button Clicks Per User)**
