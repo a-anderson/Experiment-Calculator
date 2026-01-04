@@ -1,5 +1,4 @@
 import pytest
-import numpy as np
 from experiment_calculator.core import calculations
 
 class TestCrossValidation:
