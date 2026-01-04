@@ -12,7 +12,9 @@ dependencies = [
     "streamlit (>=1.52.0,<2.0.0)",
     "plotly (>=6.0.0,<7.0.0)",
     "watchdog (>=6.0.0,<7.0.0)",
-    "streamlit-community-navigation-bar (>=4.7.11,<5.0.0)"
+    "streamlit-community-navigation-bar (>=4.7.11,<5.0.0)",
+    "pytest (>=9.0.2,<10.0.0)",
+    "pytest-cov (>=7.0.0,<8.0.0)"
 ]
 
 [tool.poetry]
@@ -22,3 +24,17 @@ packages = [{include = "experiment_calculator", from = "src"}]
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+markers = [
+    "unit: Unit tests for individual functions",
+    "integration: Integration tests for workflows",
+    "slow: Tests that take >1 second",
+]

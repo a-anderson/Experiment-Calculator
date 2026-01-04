@@ -102,3 +102,6 @@ __pycache__/
 *.so
 *.c
 *.cpp
+
+# Draft document files
+draft*.md

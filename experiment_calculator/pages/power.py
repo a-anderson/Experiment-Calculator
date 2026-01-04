@@ -1,16 +1,18 @@
 from math import ceil
 import streamlit as st
 import numpy as np
-import pandas as pd
-from utils import ui, validation, calculation, plot
+from experiment_calculator.core import calculations, validation
+from experiment_calculator.ui import plots
+from experiment_calculator.ui import components
+from experiment_calculator.core.types import OutcomeType
 
-def show_power(outcome_type):
+def show_power(outcome_type:OutcomeType) -> None:
 
     st.header(f"Power Calculator - {outcome_type.title()} Outcome")
     st.markdown(
         f"""
         <div style="max-width: 800px;">
-            {ui.outcome_distribution_summary(outcome_type)}
+            {components.outcome_distribution_summary(outcome_type)}
         </div>
         <br>
         """,
@@ -22,47 +24,47 @@ def show_power(outcome_type):
 
     with column_1:
 
-        calculation_type = ui.calculation_type_selection()
+        calculation_type = components.calculation_type_selection()
 
         if outcome_type == 'binary':
-            baseline_success = ui.baseline_success_selection()
+            baseline_success = components.baseline_success_selection()
             baseline_mean = baseline_success / 100
             baseline_stdev = None
         else: 
             baseline_success = None
-            baseline_mean = ui.baseline_mean_selection()
-            baseline_stdev = ui.baseline_std_selection()
+            baseline_mean = components.baseline_mean_selection()
+            baseline_stdev = components.baseline_std_selection()
 
         st.markdown("**Sample split across groups**")
-        st.write(ui.input_table_instructions())
+        st.write(components.input_table_instructions())
 
-        sample_split = ui.sample_split_selection()
+        sample_split = components.sample_split_selection()
         traffic_allocation_is_valid = validation.valid_traffic_allocation(sample_split)
 
-        effect_type = ui.effect_type_selection()
+        effect_type = components.effect_type_selection()
 
         if calculation_type == "Minimum Sample Size":
-            mde_level = ui.mde_level_selection(effect_type, outcome_type)
-            mde = calculation.minimum_detectable_effect(outcome_type, effect_type, mde_level)
+            mde_level = components.mde_level_selection(effect_type, outcome_type)
+            mde = calculations.minimum_detectable_effect(outcome_type, effect_type, mde_level)
             nobs1 = None
 
         else:
-            available_sample_size = ui.sample_size_input()
+            available_sample_size = components.sample_size_input()
             mde_level = None
             mde = None
 
-        significance_level = ui.significance_level_selection()
+        significance_level = components.significance_level_selection()
 
-        power_level = ui.power_level_selection()
+        power_level = components.power_level_selection()
         power = power_level / 100
 
-        comparison_type = ui.comparison_type_selection()
-        comparison_pairs = calculation.get_comparison_pairs(comparison_type, num_flights=sample_split.dropna().shape[0])
+        comparison_type = components.comparison_type_selection()
+        comparison_pairs = calculations.get_comparison_pairs(comparison_type, num_flights=sample_split.dropna().shape[0])
         num_comparisons = len(comparison_pairs)
 
-        mtc_type = ui.mtc_type_selection()
+        mtc_type = components.mtc_type_selection()
 
-        alpha = calculation.adjusted_alpha(
+        alpha = calculations.adjusted_alpha(
             base_alpha=significance_level / 100,
             num_comparisons=num_comparisons,
             multiple_comparisons=mtc_type,
@@ -75,9 +77,8 @@ def show_power(outcome_type):
             # find the ratio that all other calculations will be dependent on
             if comparison_type == "Compare to first":
                 calculation_ratios = sample_split["Traffic Allocation (%)"].dropna() / sample_split["Traffic Allocation (%)"][0]
-                ratio = calculation.design_ratio(calculation_ratios)
+                ratio = calculations.design_ratio(calculation_ratios)
             else:
-                total_sample_allocation = sample_split["Traffic Allocation (%)"].sum()
                 largest_traffic_allocation = sample_split["Traffic Allocation (%)"].max()
                 smallest_traffic_allocation = sample_split["Traffic Allocation (%)"].min()
 
@@ -89,7 +90,7 @@ def show_power(outcome_type):
             if calculation_type == "Minimum Sample Size":
                 mde_estimate = None
                 
-                effect_size = calculation.effect_size(
+                effect_size = calculations.effect_size(
                     outcome_type=outcome_type, 
                     effect_type=effect_type, 
                     baseline_mean=baseline_mean, 
@@ -97,7 +98,7 @@ def show_power(outcome_type):
                     baseline_stdev=baseline_stdev,
                 )
 
-                group1_samples_required = calculation.n1_sample_size(
+                group1_samples_required = calculations.n1_sample_size(
                     effect_size = effect_size,
                     alpha = alpha,
                     power = power,
@@ -110,7 +111,7 @@ def show_power(outcome_type):
 
                 st.write("##### Calculation Results")
 
-                results_summary = ui.format_sample_size_results(
+                results_summary = components.format_sample_size_results(
                     outcome_type=outcome_type,
                     effect_type=effect_type,
                     mde_level=mde_level,
@@ -131,7 +132,7 @@ def show_power(outcome_type):
 
                 nobs1 = available_sample_size / sum(calculation_ratios)
 
-                mde_estimate = calculation.minimum_detectable_effect_size(
+                mde_estimate = calculations.minimum_detectable_effect_size(
                     nobs1=nobs1,
                     power=power,
                     alpha=alpha,
@@ -144,7 +145,7 @@ def show_power(outcome_type):
                     if effect_type == "Absolute Effect":
                         mde_type = " unit"
 
-                    mde_estimate = calculation.convert_effect_size_for_normal_outcome(
+                    mde_estimate = calculations.convert_effect_size_for_normal_outcome(
                         effect_type=effect_type,
                         effect_size=mde_estimate,
                         baseline_mean=baseline_mean,
@@ -152,7 +153,7 @@ def show_power(outcome_type):
                     )
 
                 elif outcome_type == "binary":
-                    mde_estimate = calculation.convert_effect_size_for_binary_outcome(
+                    mde_estimate = calculations.convert_effect_size_for_binary_outcome(
                         effect_type=effect_type,
                         effect_size=mde_estimate,
                         prop1=baseline_mean,
@@ -179,7 +180,7 @@ def show_power(outcome_type):
             power_percents = list(power_range * 100)
 
             # Calculate x-axis for the power curve plot
-            plot_x_data = calculation.plot_x_data(
+            plot_x_data = calculations.plot_x_data(
                 calculation_type=calculation_type,
                 power_range=power_range,
                 nobs1=nobs1,
@@ -194,12 +195,11 @@ def show_power(outcome_type):
                 alternative='two-sided',
             )
 
-            fig = plot.power_curve(
+            fig = plots.power_curve(
                 calculation_type=calculation_type,
                 x_data=plot_x_data,
                 power_percents=power_percents,
                 target_power_level=power_level,
-                plot_type=effect_type,
                 outcome_type=outcome_type,
             )
 

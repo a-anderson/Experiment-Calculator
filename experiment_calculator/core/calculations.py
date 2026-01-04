@@ -1,6 +1,16 @@
 import numpy as np
 import pandas as pd
-from typing import Union, Literal, List, Tuple
+from typing import Union, List, Tuple
+from experiment_calculator.core.types import (
+    OutcomeType,
+    EffectType,
+    MTCType,
+    SequentialType,
+    AlternativeType,
+    CalculationType,
+    ComparisonType,
+    ConfidenceIntervalResult,
+)
 from math import ceil
 from itertools import combinations
 from statsmodels.stats.proportion import proportion_effectsize
@@ -12,7 +22,7 @@ from scipy import stats
 #--------------- Alpha Functions ---------------#
 #===============================================#
 
-def obrien_fleming_correction(information_fraction, alpha=0.05):
+def obrien_fleming_correction(information_fraction:float, alpha:float=0.05) -> float:
     """ 
     Calculate an approximation of the O'Brien-Fleming alpha spending function.
     Function taken from: https://github.com/zalando/expan/blob/master/expan/core/early_stopping.py
@@ -35,10 +45,10 @@ def obrien_fleming_correction(information_fraction, alpha=0.05):
 def adjusted_alpha(
     base_alpha:float,
     num_comparisons:int,
-    multiple_comparisons:Literal["Bonferroni", "None"],
-    sequential_testing:Literal["O'Brien-Fleming", "None"]=None,
+    multiple_comparisons:MTCType,
+    sequential_testing:SequentialType=None,
     information_fraction:float=None,
-):
+) -> float:
     """
     Calculates and adjusted alpha for multiple comparisons correction and/or
     sequential testing. 
@@ -80,10 +90,10 @@ def adjusted_alpha(
 #----------------- Effect Size -----------------#
 #===============================================#
 def minimum_detectable_effect(
-    outcome_type:Literal["binary", "normal"],
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
+    outcome_type:OutcomeType,
+    effect_type:EffectType,
     mde_input:float,
-):
+) -> float:
     """
     Calculates the correct type of minimum detectable effect for the specified
     outcome and effect type.
@@ -111,10 +121,10 @@ def minimum_detectable_effect(
 
 
 def binary_effect_size(
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
+    effect_type:EffectType,
     baseline_mean:float,
     mde:float,
-):
+) -> float:
     """
     Converts the given minimum detectable effect to a proportion effect size
     for the specified effect type.
@@ -136,17 +146,17 @@ def binary_effect_size(
     """
     assert effect_type in ("Absolute Effect", "Relative Effect")
     if effect_type == "Absolute Effect":
-        proportion_2 = baseline_mean + mde
-        return proportion_effectsize(prop1=baseline_mean, prop2=proportion_2, method="normal")
+        proportion_1 = baseline_mean + mde
+        return proportion_effectsize(prop1=proportion_1, prop2=baseline_mean, method="normal")
 
-    proportion_2 = (1 + mde) * baseline_mean
-    return proportion_effectsize(prop1=baseline_mean, prop2=proportion_2, method="normal")
+    proportion_1 = (1 + mde) * baseline_mean
+    return proportion_effectsize(prop1=proportion_1, prop2=baseline_mean, method="normal")
 
 def convert_effect_size_for_binary_outcome(
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
+    effect_type:EffectType,
     effect_size:float,
     prop1:float,
-):
+) -> float:
     """
     Converts the effect size to an absolute or relative effect for a binomially 
     distributed sample. 
@@ -163,7 +173,7 @@ def convert_effect_size_for_binary_outcome(
 
     Returns
     -------
-    return type
+    float
         The effect size converted to an absolute or relative effect. 
     """
     delta = effect_size * np.sqrt(prop1 * (1 - prop1))
@@ -174,11 +184,11 @@ def convert_effect_size_for_binary_outcome(
     return round((prop2 / prop1 - 1) * 100, 2)
 
 def convert_effect_size_for_normal_outcome(
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
+    effect_type:EffectType,
     effect_size:float,
     baseline_mean:float,
     baseline_stdev:float,
-):
+) -> float:
     """
     Converts the effect size from Cohen's D to an absolute or relative effect. 
     
@@ -198,7 +208,7 @@ def convert_effect_size_for_normal_outcome(
 
     Returns
     -------
-    return type
+    float
         The effect size converted from Cohen's D to an absolute or relative effect. 
     """
     absolute_effect = effect_size * baseline_stdev
@@ -209,11 +219,11 @@ def convert_effect_size_for_normal_outcome(
 
 
 def normal_effect_size(
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
+    effect_type:EffectType,
     baseline_mean:float,
     mde:float,
     baseline_stdev:float,
-):
+) -> float:
     """
     Calculates the effect size for normally distributed samples.
 
@@ -233,10 +243,10 @@ def normal_effect_size(
 
     Returns
     -------
-    return type
-        float
+    float
+        The effect size for normally distributed samples.
     """
-    if baseline_stdev <= 0:
+    if baseline_stdev is None or baseline_stdev <= 0:
         raise ValueError("Baseline standard deviation must be positive.")
     
     if effect_type == "Relative Effect":
@@ -247,12 +257,12 @@ def normal_effect_size(
     return (new_mean - baseline_mean) / baseline_stdev
 
 def effect_size(
-    outcome_type:Literal["binary", "normal"],
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
+    outcome_type:OutcomeType,
+    effect_type:EffectType,
     baseline_mean:float,
     mde:float,
     baseline_stdev:float=None,
-):
+) -> float:
     """
     Determines the correct type of effect size calculation for the given outcome and
     effect types, and returns those calculations.
@@ -276,7 +286,7 @@ def effect_size(
 
     Returns
     -------
-    return float
+    float
         The effect size to be used in all experiment design calculations.
     """
     assert outcome_type in ("binary", "normal")
@@ -292,8 +302,8 @@ def n1_sample_size(
     alpha:float,
     power:float,
     ratio:float,
-    alternative = "two-sided"
-):
+    alternative:AlternativeType="two-sided"
+) -> int:
     """
     Calculates the group 1 sample size required to reach the desired power for an 
     experiment with the specified minimum detectable effect.
@@ -326,7 +336,7 @@ def n1_sample_size(
             alpha = alpha,
             power = power,
             ratio = ratio,
-            alternative = "two-sided"
+            alternative = alternative
         )
     )
 
@@ -336,8 +346,8 @@ def sample_size_list(
     alpha:float,
     limiting_ratio:float,
     flight_ratios:Union[list, np.ndarray, pd.Series],
-    alternative:str="two-sided"
-):
+    alternative:AlternativeType="two-sided"
+) -> List:
     """
     Calculates a list of sample sizes required for an experiment for each power
     in the provided power range.
@@ -360,8 +370,8 @@ def sample_size_list(
 
     Returns
     -------
-    return type
-        explanation
+    List
+        Sample sizes required for an experiment for each power in the provided power range.
     """
     nobs1 = np.array([n1_sample_size(effect_size=effect_size, alpha=alpha, power=p, ratio=limiting_ratio, alternative=alternative) for p in power_range])
     total_obs = nobs1 * sum(flight_ratios)
@@ -372,8 +382,8 @@ def minimum_detectable_effect_size(
     power:float,
     alpha:float,
     ratio:float,
-    alternative:str="two-sided"
-):
+    alternative:AlternativeType="two-sided"
+) -> float:
     """
     Calculates the minimum detectable effect for an experiment where the sample size
     and alpha are already pre-set.
@@ -394,15 +404,15 @@ def minimum_detectable_effect_size(
 
     Returns
     -------
-    return type
-        explanation
+    float
+        Minimum detectable effect.
     """
     return tt_ind_solve_power(
             nobs1 = nobs1,
             alpha = alpha,
             power = power,
             ratio = ratio,
-            alternative = "two-sided"
+            alternative = alternative
     )
 
 def effect_size_list(
@@ -410,12 +420,12 @@ def effect_size_list(
     power_range:Union[list, np.ndarray],
     alpha:float,
     limiting_ratio:float,
-    outcome_type:Literal["binary", "normal"],
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
+    outcome_type:OutcomeType,
+    effect_type:EffectType,
     baseline_mean:float,
     baseline_stdev:float,
-    alternative:str="two-sided"
-):
+    alternative:AlternativeType="two-sided"
+) -> List:
     """
     Parameters
     ----------
@@ -456,19 +466,19 @@ def effect_size_list(
     return list(vectorised_conversion(effect_type, effect_sizes, baseline_mean, baseline_stdev))
 
 def plot_x_data(
-    calculation_type:Literal["Minimum Sample Size", "Minimum Detectable Effect"],
+    calculation_type:CalculationType,
     power_range:Union[list, np.ndarray],
     nobs1:int,
     effect_size:float,
     alpha:float,
     limiting_ratio:float,
     flight_ratios:Union[list, np.ndarray, pd.Series],
-    outcome_type:Literal["binary", "normal"],
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
-    baseline_mean:str,
-    baseline_stdev:str,
-    alternative:str="two-sided",
-):
+    outcome_type:OutcomeType,
+    effect_type:EffectType,
+    baseline_mean:float,
+    baseline_stdev:float,
+    alternative:AlternativeType="two-sided",
+) -> List[float]:
     """
     Calculate the values to be used for the the x-data in the power curve plot.
 
@@ -535,7 +545,7 @@ def plot_x_data(
 #----------------- Other Calcs -----------------#
 #===============================================#
 
-def design_ratio(ratios:Union[list, np.ndarray, pd.Series]):
+def design_ratio(ratios:Union[list, np.ndarray, pd.Series]) -> float:
     """
     Identify the sample size comparison ratio that will be the limiting ratio
     for the experiment design.
@@ -556,9 +566,9 @@ def design_ratio(ratios:Union[list, np.ndarray, pd.Series]):
     return smallest_ratio
 
 def get_comparison_pairs(
-    comparison_type:Literal["Compare to first", "Compare all pairs"], 
+    comparison_type:ComparisonType, 
     num_flights:int,
-):
+) -> List[Tuple[int, int]]:
     """
     Generate a lits of row pairs to compare for group comparison results.
 
@@ -586,10 +596,10 @@ def get_comparison_pairs(
 #===============================================#
 
 def group_responses(
-    outcome_type:Literal["binary", "normal"], 
+    outcome_type:OutcomeType, 
     experiment_data_summary:pd.DataFrame, 
     alpha:float=0.05
-):
+) -> pd.DataFrame:
     """
     Calculate the point estimates and confidence intervals for each group 
     in the experiment.
@@ -636,7 +646,7 @@ def group_responses(
 def binomial_standard_error(
     proportion:float, 
     sample_size:int
-):
+) -> float:
     """
     Calculate the standard error for binomially distributed samples.
 
@@ -660,8 +670,8 @@ def binomial_confidence_interval(
     prop2:float, 
     n2:int, 
     confidence:float, 
-    effect_type:Literal["Absolute Effect", "Relative Effect"]
-):
+    effect_type:EffectType
+) -> ConfidenceIntervalResult:
     """
     Calculate the point estimate and confidence interval for the difference
     between two groups that have binomially distributed outcomes.
@@ -722,7 +732,7 @@ def normal_standard_error(
     stdev:float, 
     sample_size:int,
 
-):
+) -> float:
     """
     Calculate the standard error for normally distributed samples.
 
@@ -745,7 +755,7 @@ def dof_welch_satterthwaithe(
     n1:int, 
     stdev2:float, 
     n2:int
-):
+) -> int:
     """
     Calculate degrees of freedom for a t-test using the Welch–Satterthwaite equation
     to calculate degrees of freedom for two-sample t-tests where the variance may
@@ -779,8 +789,8 @@ def normal_confidence_interval(
     stdev2:float, 
     n2:int, 
     confidence:float, 
-    effect_type:Literal["Absolute Effect", "Relative Effect"]
-):
+    effect_type:EffectType
+) -> ConfidenceIntervalResult:
     """
     Calculate the point estimate and confidence interval for the difference
     between two groups that have normally distributed outcomes.
@@ -807,7 +817,7 @@ def normal_confidence_interval(
 
     Returns
     -------
-    Dict
+    ConfidenceIntervalResult
         Dictionary containing the point estimate and confidence interval calculations 
         for between group differences.
     """
@@ -847,9 +857,9 @@ def group_differences(
     experiment_data_summary:pd.DataFrame,
     alpha:float,
     comparison_pairs:List[Tuple[int, int]],
-    outcome_type:Literal["binary", "normal"],
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
-):
+    outcome_type:OutcomeType,
+    effect_type:EffectType,
+) -> pd.DataFrame:
     """
     Parameters
     ----------
@@ -920,9 +930,9 @@ def group_differences(
 
 def format_outcomes_for_plots(
     experiment_results:pd.DataFrame, 
-    outcome_type:Literal["binary", "normal"], 
-    effect_type:Literal["Absolute Effect", "Relative Effect"]
-):
+    outcome_type:OutcomeType, 
+    effect_type:EffectType
+) -> pd.DataFrame:
     """
     Format outcomes for significance plots.
 
@@ -961,7 +971,7 @@ def format_outcomes_for_plots(
 #------------------ SRM Calcs ------------------#
 #===============================================#
 
-def srm_pvalue(sample_size_data:pd.DataFrame):
+def srm_pvalue(sample_size_data:pd.DataFrame) -> float:
 
     """
     Parameters
@@ -978,7 +988,6 @@ def srm_pvalue(sample_size_data:pd.DataFrame):
     """
 
     total_samples = sample_size_data["Sample Size"].sum()
-    actual_proportions = sample_size_data["Sample Size"] / total_samples
 
     p_value = proportion.proportions_chisquare(
         count = sample_size_data["Sample Size"], 

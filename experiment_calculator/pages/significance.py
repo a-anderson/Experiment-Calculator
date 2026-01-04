@@ -1,14 +1,15 @@
-import pandas as pd
 import streamlit as st
-from typing import Union, Literal
-from utils import ui, validation, calculation, plot
+from experiment_calculator.core.types import OutcomeType
+from experiment_calculator.core import calculations, validation
+from experiment_calculator.ui import plots
+from experiment_calculator.ui import components
 
-def show_significance(outcome_type:Literal["binary", "normal"]):
+def show_significance(outcome_type:OutcomeType) -> None:
     st.header(f"Significance Calculator - {outcome_type.title()} Outcome")
     st.markdown(
         f"""
         <div style="max-width: 800px;">
-            {ui.outcome_distribution_summary(outcome_type)}
+            {components.outcome_distribution_summary(outcome_type)}
         </div>
         <br>
         """,
@@ -21,32 +22,32 @@ def show_significance(outcome_type:Literal["binary", "normal"]):
     with column_1:
 
         st.markdown("**Summary data for each experiment group**")
-        st.write(ui.input_table_instructions())
+        st.write(components.input_table_instructions())
 
-        experiment_summary = ui.experiment_data_summary(outcome_type)
+        experiment_summary = components.experiment_data_summary(outcome_type)
         summary_data_is_valid = validation.valid_summary_data(experiment_summary.dropna(), outcome_type)
 
-        effect_type = ui.effect_type_selection()
+        effect_type = components.effect_type_selection()
 
-        significance_level = ui.significance_level_selection()
+        significance_level = components.significance_level_selection()
 
-        comparison_type = ui.comparison_type_selection()
-        comparison_pairs = calculation.get_comparison_pairs(comparison_type=comparison_type, num_flights=experiment_summary.dropna().shape[0])
+        comparison_type = components.comparison_type_selection()
+        comparison_pairs = calculations.get_comparison_pairs(comparison_type=comparison_type, num_flights=experiment_summary.dropna().shape[0])
         num_comparisons = len(comparison_pairs)
         
-        mtc_type = ui.mtc_type_selection()
+        mtc_type = components.mtc_type_selection()
 
-        sequential_testing = ui.sequential_testing_selection()
+        sequential_testing = components.sequential_testing_selection()
 
         if sequential_testing != "None":
             st.write("##### Experiment Progress")
             st.write("Enter the number of days the experiment has been running and the total number of days the experiment is planned to run.")
-            experiment_progress = ui.experiment_duration_summary()
+            experiment_progress = components.experiment_duration_summary()
             information_fraction = experiment_progress["Days Passed"][0] / experiment_progress["Total Experiment Duration"][0]
         else:
             information_fraction = None
         
-        alpha = calculation.adjusted_alpha(
+        alpha = calculations.adjusted_alpha(
             base_alpha=significance_level / 100,
             num_comparisons=num_comparisons,
             multiple_comparisons=mtc_type,
@@ -60,7 +61,7 @@ def show_significance(outcome_type:Literal["binary", "normal"]):
             st.write("##### Calculation Results")
 
             ## ---- Group Difference Calculations ---- ##
-            difference_results = calculation.group_differences(
+            difference_results = calculations.group_differences(
                 experiment_data_summary=experiment_summary.dropna(),
                 alpha=alpha,
                 comparison_pairs=comparison_pairs,
@@ -68,7 +69,7 @@ def show_significance(outcome_type:Literal["binary", "normal"]):
                 effect_type=effect_type
             )
             
-            difference_results = calculation.format_outcomes_for_plots(difference_results, outcome_type, effect_type)
+            difference_results = calculations.format_outcomes_for_plots(difference_results, outcome_type, effect_type)
             
             for row_number in range(difference_results.shape[0]):
                 row = difference_results.iloc[row_number,:]
@@ -97,7 +98,7 @@ def show_significance(outcome_type:Literal["binary", "normal"]):
                 )
 
             ## ---- Group Difference Plot Generation ---- ##
-            group_differences = plot.group_difference_forest(
+            group_differences = plots.group_difference_forest(
                 data=difference_results,
                 outcome_type=outcome_type,
                 effect_type=effect_type,
@@ -106,15 +107,15 @@ def show_significance(outcome_type:Literal["binary", "normal"]):
             st.plotly_chart(group_differences, width="stretch")
 
             ## ---- Group Response Plot Generation ---- ##
-            group_responses = calculation.group_responses(
+            group_responses = calculations.group_responses(
                 outcome_type=outcome_type,
                 experiment_data_summary=experiment_summary.dropna(),
                 alpha=alpha
             )
 
-            group_responses = calculation.format_outcomes_for_plots(group_responses, outcome_type, effect_type)
+            group_responses = calculations.format_outcomes_for_plots(group_responses, outcome_type, effect_type)
 
-            response_plot = plot.group_response_forest(
+            response_plot = plots.group_response_forest(
                 data=group_responses,
                 outcome_type=outcome_type,
             )

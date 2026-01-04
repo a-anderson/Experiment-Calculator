@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
-import pages as pg
+from experiment_calculator.pages import show_power, show_significance, show_srm_test
 
 st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
 
@@ -38,11 +38,11 @@ page = st_navbar(
 )
 
 functions = {
-    "Power - Binary": (pg.show_power, "binary"),
-    "Power - Normal": (pg.show_power, "normal"),
-    "Significance - Binary": (pg.show_significance, "binary"),
-    "Significance - Normal": (pg.show_significance, "normal"),
-    "SRM Test": (pg.show_srm_test, None),
+    "Power - Binary": (show_power, "binary"),
+    "Power - Normal": (show_power, "normal"),
+    "Significance - Binary": (show_significance, "binary"),
+    "Significance - Normal": (show_significance, "normal"),
+    "SRM Test": (show_srm_test, None),
 }
 
 go_to, arg = functions.get(page, (None, None))
