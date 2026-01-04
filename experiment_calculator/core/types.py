@@ -6,8 +6,10 @@ CalculationType = Literal["Minimum Sample Size", "Minimum Detectable Effect"]
 ComparisonType = Literal["Compare to first", "Compare all pairs"]
 MTCType = Literal["Bonferroni", "None"]
 SequentialType = Literal["O'Brien-Fleming", "None"]
+AlternativeType = Literal["two-sided", "smaller", "larger"]
 
-class ConfidenceInterval(TypedDict):
+class ConfidenceIntervalResult(TypedDict):
+    """Result from confidence interval calculations."""
     point_estimate: list[float]
     ci_lower: list[float]
     ci_upper: list[float]

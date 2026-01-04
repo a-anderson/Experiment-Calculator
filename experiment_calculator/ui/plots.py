@@ -1,16 +1,17 @@
-from typing import Union, Literal
+from typing import Union
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.colors as pc
+from experiment_calculator.core.types import OutcomeType, CalculationType, EffectType
 
 def power_curve(
-    calculation_type:Literal["Minimum Sample Size", "Required Sample Size"],
+    calculation_type:CalculationType,
     x_data:Union[list, np.ndarray],
     power_percents:Union[list, np.ndarray],
     target_power_level:int,
-    outcome_type:Literal["binary", "normal"]
-):
+    outcome_type:OutcomeType,
+) -> go.Figure:
     if calculation_type == "Minimum Sample Size":
         x_label = "Required Sample Size"
         hover_label = "Sample Size"
@@ -85,9 +86,9 @@ def power_curve(
 
 def group_difference_forest(
     data:pd.DataFrame,
-    outcome_type:Literal["binary", "normal"],
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
-):
+    outcome_type:OutcomeType,
+    effect_type:EffectType,
+) -> go.Figure:
 
     data["error"] = (data["ci_upper"] - data["ci_lower"]) / 2
     data_reversed = data.iloc[::-1].reset_index(drop=True)
@@ -169,8 +170,8 @@ def group_difference_forest(
 
 def group_response_forest(
     data:pd.DataFrame,
-    outcome_type:Literal["binary", "normal"],
-):
+    outcome_type:OutcomeType,
+) -> go.Figure:
 
     data["error"] = (data["ci_upper"] - data["ci_lower"]) / 2
 

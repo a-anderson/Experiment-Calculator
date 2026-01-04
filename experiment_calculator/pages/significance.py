@@ -1,11 +1,10 @@
-import pandas as pd
 import streamlit as st
-from typing import Union, Literal
-from core import calculations, validation
-from ui import plots
-from ui import components
+from experiment_calculator.core.types import OutcomeType
+from experiment_calculator.core import calculations, validation
+from experiment_calculator.ui import plots
+from experiment_calculator.ui import components
 
-def show_significance(outcome_type:Literal["binary", "normal"]):
+def show_significance(outcome_type:OutcomeType) -> None:
     st.header(f"Significance Calculator - {outcome_type.title()} Outcome")
     st.markdown(
         f"""

@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Literal
+from experiment_calculator.core.types import OutcomeType
 
 def valid_traffic_allocation(traffic_allocation:pd.DataFrame):
     
@@ -9,7 +9,7 @@ def valid_traffic_allocation(traffic_allocation:pd.DataFrame):
 
     return min_allocation > 0 and max_allocation < 100 and total_traffic <= 100
 
-def valid_summary_data(summary_data:pd.DataFrame, outcome_type:Literal["binary", "normal"]):
+def valid_summary_data(summary_data:pd.DataFrame, outcome_type:OutcomeType):
 
     valid_samples = summary_data["Sample Size"] > 0
     all_samples_valid = valid_samples.all()

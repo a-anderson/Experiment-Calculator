@@ -1,12 +1,12 @@
 from math import ceil
 import streamlit as st
 import numpy as np
-import pandas as pd
-from core import calculations, validation
-from ui import plots
-from ui import components
+from experiment_calculator.core import calculations, validation
+from experiment_calculator.ui import plots
+from experiment_calculator.ui import components
+from experiment_calculator.core.types import OutcomeType
 
-def show_power(outcome_type):
+def show_power(outcome_type:OutcomeType) -> None:
 
     st.header(f"Power Calculator - {outcome_type.title()} Outcome")
     st.markdown(

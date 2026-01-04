@@ -1,3 +1,3 @@
-from pages.power import show_power
-from pages.significance import show_significance
-from pages.srm_test import show_srm_test
+from experiment_calculator.pages.power import show_power
+from experiment_calculator.pages.significance import show_significance
+from experiment_calculator.pages.srm_test import show_srm_test

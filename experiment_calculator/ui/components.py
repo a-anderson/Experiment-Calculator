@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from typing import Union, Literal
+from experiment_calculator.core.types import OutcomeType, EffectType
 
 def calculation_type_selection():
     return st.radio(
@@ -55,8 +55,8 @@ def effect_type_selection():
     )
 
 def mde_level_selection(
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
-    outcome_type:Literal["binary", "normal"],
+    effect_type:EffectType,
+    outcome_type:OutcomeType,
 ): 
 
     if effect_type == "Absolute Effect" and outcome_type == "normal":
@@ -121,8 +121,8 @@ def mtc_type_selection():
     )
 
 def format_sample_size_results(
-    outcome_type:Literal["binary", "normal"],
-    effect_type:Literal["Absolute Effect", "Relative Effect"],
+    outcome_type:OutcomeType,
+    effect_type:EffectType,
     mde_level:int,
     baseline_mean:float,
     power_level:int,
@@ -151,7 +151,7 @@ def format_sample_size_results(
     
     return f"Measuring a {mde_level}{mde_type} {formatted_effect}increase in a response rate of {formatted_mean}%, with {power_level}% power and a {significance_level}% significance level requires a **total sample size of {total_samples_required:,}** distributed across the treatments (in the given traffic proportions)."
 
-def experiment_data_summary(outcome_type:Literal["binary", "normal"]):
+def experiment_data_summary(outcome_type:OutcomeType):
     if outcome_type == "normal":
             default_results = pd.DataFrame(
                 [
@@ -191,7 +191,7 @@ def input_table_instructions():
         + "top right of the table, and click the trashcan icon."
         )
 
-def outcome_distribution_summary(outcome_type:Literal["binary", "normal"],):
+def outcome_distribution_summary(outcome_type:OutcomeType,):
     if outcome_type == "binary":
         return (
             "Use this calculator when measuring outcomes that are binomially distributed."
