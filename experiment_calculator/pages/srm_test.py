@@ -4,7 +4,7 @@ from pathlib import Path
 from experiment_calculator.core import calculations, validation
 from experiment_calculator.ui import components
 
-def show_srm_test():
+def show_srm_test() -> None:
     st.header("Sample Ratio Mismatch Test")
     st.markdown("") # Extra space for formatting
 
