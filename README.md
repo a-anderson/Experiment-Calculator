@@ -3,7 +3,7 @@
 [![Tests](https://github.com/a-anderson/Experiment-Calculator/actions/workflows/tests.yml/badge.svg)](https://github.com/a-anderson/Experiment-Calculator/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A statistical toolkit for designing, analysing, and diagnosing A/B tests. This is a Python/Streamlit implementation of the [original R Shiny Experiment Calculator](https://github.com/sabush/ExperimentCalculator) by [Stephen Bush](https://github.com/sabush).
+A statistical toolkit for designing, analyzing, and diagnosing A/B tests. This is a Python/Streamlit implementation of the R Shiny [Experiment Calculator](https://github.com/sabush/ExperimentCalculator) by [Stephen Bush](https://github.com/sabush).
 
 ## Overview
 
@@ -181,6 +181,17 @@ Experiment-Calculator/
 ## Testing
 
 ### Running Tests
+
+To run tests ensure you have first set up a development environment:
+
+```bash
+# Clone and install
+git clone https://github.com/a-anderson/Experiment-Calculator.git
+cd Experiment-Calculator
+poetry install --with dev
+```
+
+Then run tests can be run using the following commands:
 
 ```bash
 # Run all tests with coverage
