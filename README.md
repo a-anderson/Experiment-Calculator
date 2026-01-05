@@ -1,5 +1,7 @@
 # Experiment Calculator
 
+[![Tests](https://github.com/a-anderson/Experiment-Calculator/actions/workflows/tests.yml/badge.svg)](https://github.com/a-anderson/Experiment-Calculator/actions/workflows/tests.yml)
+
 A statistical toolkit for designing, analysing, and diagnosing A/B tests. This is a Python/Streamlit implementation of the [original R Shiny Experiment Calculator](https://github.com/sabush/ExperimentCalculator) by [Stephen Bush](https://github.com/sabush).
 
 ## Overview
