@@ -230,7 +230,7 @@ poetry run pytest tests/integration/ -v
 
 ### Sample Ratio Mismatch
 
--   **Chi-square test**: Goodness-of-fit test for observed vs. expected proportions
+-   **Chi-square test**: Test of proportions for observed vs. expected proportions
 -   **Threshold**: Default p-value threshold of 0.001 (Kohavi et al., 2012)
 
 ## License
