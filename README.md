@@ -21,11 +21,11 @@ _Example: Power calculator for binary outcomes showing sample size requirements 
 
 ### Key Features
 
--   ✅ **Statistically rigorous**: Implements standard methods from statsmodels and scipy
--   ✅ **Multiple testing corrections**: Bonferroni correction for family-wise error rate control
--   ✅ **Sequential testing**: O'Brien-Fleming spending function for early stopping
--   ✅ **Flexible designs**: Supports multi-arm experiments with arbitrary traffic allocations
--   ✅ **Interactive visualisations**: Power curves and forest plots with Plotly
+-   **Statistically rigorous**: Implements standard methods from statsmodels and scipy
+-   **Multiple testing corrections**: Bonferroni correction for family-wise error rate control
+-   **Sequential testing**: O'Brien-Fleming spending function for early stopping
+-   **Flexible designs**: Supports multi-arm experiments with arbitrary traffic allocations
+-   **Interactive visualisations**: Power curves and forest plots with Plotly
 
 ## Use Cases
 
